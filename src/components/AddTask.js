@@ -42,10 +42,10 @@ const AddCharacters = ({ addTask, addedTask }) => {
     e.preventDefault();
     console.log({ name, height, mass, eyeColor, gender });
 
-    // if (!name) {
-    //   alert("Please add a character");
-    //   return;
-    // }
+    if (!name) {
+      alert("Please add a character");
+      return;
+    }
 
     addTask({ name, height, mass, eyeColor, gender });
 
@@ -97,6 +97,7 @@ const AddCharacters = ({ addTask, addedTask }) => {
       <div className="form-control form-control-check">
         <label>Set Gender</label>
         <select onChange={(e) => setGender(e.target.value)}>
+          <option value={null}>Wybierz opcje</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
