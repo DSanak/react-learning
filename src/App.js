@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Tasks from './components/Tasks'
-import AddCharacters from './components/AddTask'
+import AddTask from './components/AddTask'
 import About from './components/About'
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
+  const [addedTask, setAddedTask] = useState(false);
 
   useEffect(() => {
     const getTasks = async () => {
@@ -44,8 +45,11 @@ const App = () => {
       },
       body: JSON.stringify(task),
     })
-
     const data = await res.json()
+    
+    if (data.name || data.gender) {
+      setAddedTask(true);
+    }
 
     setTasks([...tasks, data])
 
@@ -99,7 +103,7 @@ const App = () => {
             path='/'
             element={
               <>
-                {showAddTask && <AddCharacters onAdd={addTask} />}
+                {showAddTask && <AddTask addedTask={addedTask} addTask={addTask} />}
                 {tasks.length > 0 ? (
                   <Tasks
                     tasks={tasks}

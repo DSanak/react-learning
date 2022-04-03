@@ -5,56 +5,64 @@ const characters = [
     name: "Luke Skywalker",
     height: "172",
     mass: "77",
-    eye_color: "blue",
+    eyeColor: "blue",
     gender: "male",
   },
   {
     name: "Darth Vader",
     height: "202",
     mass: "136",
-    eye_color: "yellow",
+    eyeColor: "yellow",
     gender: "male",
   },
   {
     name: "Leia Organa",
     height: "150",
     mass: "49",
-    eye_color: "brown",
+    eyeColor: "brown",
     gender: "female",
   },
   {
     name: "Anakin Skywalker",
     height: "188",
     mass: "84",
-    eye_color: "blue",
+    eyeColor: "blue",
     gender: "male",
   },
 ];
 
-const AddCharacters = ({ onAdd }) => {
+const AddCharacters = ({ addTask, addedTask }) => {
   const [name, setName] = useState("");
   const [height, setHeight] = useState("");
   const [mass, setMass] = useState("");
-  const [eye_color, setEye_color] = useState("");
+  const [eyeColor, setEyeColor] = useState("");
   const [gender, setGender] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log({ name, height, mass, eyeColor, gender });
 
-    if (!name) {
-      alert("Please add a character");
-      return;
+    // if (!name) {
+    //   alert("Please add a character");
+    //   return;
+    // }
+
+    addTask({ name, height, mass, eyeColor, gender });
+
+    if (addedTask) {
+      setName("");
+      setHeight("");
+      setMass("");
+      setEyeColor("");
+      setGender("");
     }
-
-    onAdd({ name, height, mass, eye_color, gender });
-
-    setName("");
-    setHeight("");
-    setMass("");
-    eye_color("");
-    gender("");
   };
 
+  const handleNameChange = (name) => {
+    if (typeof name === "string") setName();
+  };
+
+  console.log();
   return (
     <form className="add-form" onSubmit={onSubmit}>
       <div className="form-control">
@@ -63,7 +71,9 @@ const AddCharacters = ({ onAdd }) => {
           type="text"
           placeholder="Add name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
         />
       </div>
       <div className="form-control">
@@ -85,19 +95,19 @@ const AddCharacters = ({ onAdd }) => {
         />
       </div>
       <div className="form-control form-control-check">
-        <label>Set Eye Color</label>
-        <select onChange={AddCharacters} style={{width:70}}>
-          <option value="blue">Blue</option>
-          <option value="red">Red</option>
-          <option value="green">Green</option>
+        <label>Set Gender</label>
+        <select onChange={(e) => setGender(e.target.value)}>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
         </select>
       </div>
 
       <div className="form-control form-control-check">
-        <label>Set Gender</label>
-        <select onChange={AddCharacters} style={{width:70}}>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+        <label>Set Eye Color</label>
+        <select onChange={(e) => setEyeColor(e.target.value)}>
+          <option value={null}>Wybierz opcje</option>
+          <option value="blue">Blue</option>
+          <option value="red">Red</option>
         </select>
       </div>
 
